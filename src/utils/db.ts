@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import utils from './utils';
+import logger from './log';
 
 class Database {
   private connection: any;
@@ -7,6 +8,7 @@ class Database {
   public uri: string;
 
   constructor() {
+    // this.uri = `nongodb://{utils.mongo.user} + ':' + utils.mongo.pass + '@' + utils.mongo.host + ':' + utils.mongo.port + '/' + utils.mongo.db;
     this.uri = `mongodb://${utils.mongo.user}:${utils.mongo.pass}@${utils.mongo.host}:${utils.mongo.port}/${utils.mongo.db}`;
     this.onConnection();
   }
@@ -15,16 +17,16 @@ class Database {
     this.connection = mongoose.connection;
 
     this.connection.on('connected', () => {
-      console.log('Mongo Connection Established');
+      logger.info('Mongo Connection Established');
     });
 
     this.connection.on('reconnected', () => {
-      console.log('Mongo Connection Reestablished');
+      logger.info('Mongo Connection Reestablished');
     });
 
     this.connection.on('disconnected', () => {
-      console.log('Mongo Connection Disconnected');
-      console.log('Trying to reconnect to Mongo...');
+      logger.info('Mongo Connection Disconnected');
+      logger.info('Trying to reconnect to Mongo...');
       setTimeout(() => {
         mongoose.connect(this.uri, {
           keepAlive: true,
@@ -39,11 +41,11 @@ class Database {
       }, 3000);
     });
     this.connection.on('close', () => {
-      console.log('Mongo Connection Closed');
+      logger.info('Mongo Connection Closed');
     });
 
     this.connection.on('error', (error: Error) => {
-      console.log(`Mongo Connection Error:${error}`);
+      logger.info(`Mongo Connection Error${error}`);
     });
 
     const run = async () => {
@@ -57,7 +59,7 @@ class Database {
       });
     };
 
-    run().catch((error) => console.error(error));
+    run().catch((error) => logger.error(error));
   }
 }
 
