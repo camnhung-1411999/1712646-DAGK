@@ -1,0 +1,33 @@
+{
+  "name": "@sm/oauth2",
+  "version": "1.0.0",
+  "description": "User Management Service",
+  "main": "index.js",
+  "repository": "",
+  "author": "Cam Nhung <quynhlam1411999@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bcrypt-nodejs": "^0.0.31",
+    "@types/mongoose": "^5.7.27"
+  },
+  "scripts": {
+    "dev": "npx nodemon",
+    "lint": "eslint --ext .jsx,.ts,.tsx ./src",
+    "build": "npx tsc --skipLibCheck",
+    "start": "npx tsc --skipLibCheck && node ./dist/server.js"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/ioredis": "^4.17.2",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/lodash": "^4.14.157",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "grpc": "^1.24.3",
+    "ioredis": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.24"
+  }
+}
