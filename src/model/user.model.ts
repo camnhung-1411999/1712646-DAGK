@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import crypto from 'crypto';
 import mongoose, { Schema } from 'mongoose';
 
 export type IUser = mongoose.Document & {
@@ -10,7 +9,6 @@ export type IUser = mongoose.Document & {
   createdAt: Date;
   updatedAt: Date;
   comparePassword: ComparePasswordFunction;
-  gravatar: (size: number) => string;
 };
 
 type ComparePasswordFunction = (this: IUser, candidatePassword: string, cb?: (err: any, isMatch: any) => {}) => void;
@@ -47,16 +45,6 @@ const comparePassword: ComparePasswordFunction = async function (this: IUser, ca
 
 userSchema.methods.comparePassword = comparePassword;
 
-/**
- * Helper method for getting user's gravatar.
- */
-userSchema.methods.gravatar = function (iuser: IUser, size: number = 200) {
-  if (!iuser.user) {
-    return `https://gravatar.com/avatar/?s=${size}&d=retro`;
-  }
-  const md5 = crypto.createHash('md5').update(iuser.user).digest('hex');
-  return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
-};
 
 const UserCollection = mongoose.model<IUser>('User', userSchema);
 

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import utils from './utils';
 import logger from './log';
 
 class Database {
@@ -9,7 +8,7 @@ class Database {
 
   constructor() {
     // this.uri = `nongodb://{utils.mongo.user} + ':' + utils.mongo.pass + '@' + utils.mongo.host + ':' + utils.mongo.port + '/' + utils.mongo.db;
-    this.uri = `mongodb://${utils.mongo.user}:${utils.mongo.pass}@${utils.mongo.host}:${utils.mongo.port}/${utils.mongo.db}`;
+    this.uri = `mongodb+srv://camnhung:camnhung123@cluster0.wj4cd.mongodb.net/Todoapp?retryWrites=true&w=majority`;
     this.onConnection();
   }
 
