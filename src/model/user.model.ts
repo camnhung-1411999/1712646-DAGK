@@ -4,10 +4,9 @@ import mongoose, { Schema } from 'mongoose';
 export type IUser = mongoose.Document & {
   user: string;
   password: string;
+  name: string;
   passwordResetToken: string;
   passwordResetExpires: Date;
-  createdAt: Date;
-  updatedAt: Date;
   comparePassword: ComparePasswordFunction;
 };
 
@@ -16,10 +15,9 @@ type ComparePasswordFunction = (this: IUser, candidatePassword: string, cb?: (er
 const userSchema = new mongoose.Schema({
   user: { type: String, unique: true, index: true },
   password: String,
+  name: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
-  createdAt: Date,
-  updatedAt: Date,
 }, { timestamps: true });
 
 /**

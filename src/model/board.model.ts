@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import UserCollection from './user.model';
 
 export type IBoard = mongoose.Document & {
   createBy: string;
@@ -7,7 +8,7 @@ export type IBoard = mongoose.Document & {
 };
 
 const boardSchema = new mongoose.Schema({
-  createdBy: { type: Schema.Types.ObjectId, index: true },
+  createdBy: { type: Schema.Types.ObjectId, ref: typeof UserCollection, index: true },
   name: String,
   members: Array,
 }, { timestamps: true });
