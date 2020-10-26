@@ -22,7 +22,7 @@ class UserService {
     }
 
     async detail(input: User) {
-        const findUser: IUser = await UserCollection.findOne({
+        const findUser = await UserCollection.findOne({
             user: input.user
         });
         if (!findUser) {
@@ -79,7 +79,7 @@ class UserService {
     await UserCollection.findOne({
         user: input.user
     })
-    .then((user: IUser) => {
+    .then((user) => {
       if (user) {
         const err: Error = new Error();
         err.message = 'User already exists'
@@ -99,6 +99,11 @@ class UserService {
       const user = await UserCollection.findOne({
           user: input.user,
       });
+      if (!user) {
+        const error = new Error();
+        error.message =" User not found";
+        throw error;
+      }
       if (input.password) {
           user.password = input.password;
       }
