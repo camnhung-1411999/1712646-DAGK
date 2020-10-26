@@ -25,8 +25,8 @@
   },
   "scripts": {
     "dev": "npx nodemon",
-    "build": "npx tsc --skipLibCheck",
-    "start": "npx tsc --skipLibCheck && node ./dist/server.js",
+    "build": "tsc",
+    "start": "npm run build && node ./dist/index.js",
     "lint": "eslint --ext .jsx,.ts,.tsx ./src"
   },
   "dependencies": {
