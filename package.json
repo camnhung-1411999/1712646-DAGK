@@ -25,7 +25,7 @@
   },
   "scripts": {
     "dev": "npx nodemon",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "npm run build && node ./dist/index.js",
     "lint": "eslint --ext .jsx,.ts,.tsx ./src"
   },
