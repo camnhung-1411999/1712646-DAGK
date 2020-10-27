@@ -38,7 +38,8 @@ class TaskService {
         const task = await TaskCollection.create({
           type: input.type,
           content: input.content,
-          createBy: input.createBy,
+          createdBy: input.createdBy,
+          updatedBy: input.updatedBy,
           board: input.board,
         });
         return task;
@@ -61,6 +62,7 @@ class TaskService {
         if (input.content) {
             task.content = input.content;
         }
+        task.updatedBy = input.updatedBy;
 
         await task.save();
 

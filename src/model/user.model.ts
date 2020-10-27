@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
 /**
  * Password hash middleware.
  */
-userSchema.pre('save', function save(next: any) {
+userSchema.pre('save', function save(this: any, next: any) {
   const user = this as IUser;
   if (!user.isModified('password')) { return next(); }
   bcrypt.genSalt(10, (err, salt) => {

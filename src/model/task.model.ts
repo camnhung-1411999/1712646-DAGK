@@ -3,7 +3,8 @@ import BoardCollection from './board.model';
 import UserCollection from './user.model';
 
 export type ITask = mongoose.Document & {
-  createBy: string;
+  createdBy: string;
+  updatedBy: string;
   type: string;
   content: string;
   board: string;
@@ -11,7 +12,8 @@ export type ITask = mongoose.Document & {
 
 const taskSchema = new mongoose.Schema({
   createdBy: { type: Schema.Types.ObjectId, ref: UserCollection, index: true },
-  type: String,
+  updatedBy: { type: Schema.Types.ObjectId, ref:UserCollection},
+  status: String,
   content: String,
   board: { type: Schema.Types.ObjectId, ref: typeof BoardCollection},
 }, { timestamps: true });
