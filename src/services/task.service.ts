@@ -3,10 +3,10 @@ import TaskCollection, { ITask } from '../model/task.model';
 class TaskService {
     async list(input: any) {
         let condition = {};
-        if (input.type) {
+        if (input.status) {
             condition = {
                 ...condition,
-                type: input.type,
+                status: input.status,
             }
         }
 
@@ -36,7 +36,7 @@ class TaskService {
 
     async create(input: ITask) {
         const task = await TaskCollection.create({
-          type: input.type,
+          status: input.status,
           content: input.content,
           createdBy: input.createdBy,
           updatedBy: input.updatedBy,
@@ -56,8 +56,8 @@ class TaskService {
             err.name = 'Error';
             throw err;
         }
-        if (input.type) {
-            task.type = input.type;
+        if (input.status) {
+            task.status = input.status;
         }
         if (input.content) {
             task.content = input.content;

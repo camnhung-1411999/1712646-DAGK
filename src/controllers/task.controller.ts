@@ -1,19 +1,20 @@
 import TaskService from '../services/task.service';
 import { Request, Response } from 'express';
 class TaskController {
-    async list(req: Request) {
+    async list(req: Request, res: Response) {
         const input = {
             type: req.query.type,
             board: req.query.board,
         }
         const tasks = await TaskService.list(input);
-        return tasks;
+        res.json(tasks);
     }
 
     async find(req: Request, res: Response) {
         const id = req.params.id;
         const task = await TaskService.find(id);
-        return task;
+        res.json(task);
+
     }
 
     async create(req: Request, res: Response) {
@@ -21,7 +22,7 @@ class TaskController {
             ...req.body,
         }
         const task = await TaskService.create(input);
-        return task;
+        res.json(task);
     }
     async update(req: Request, res: Response) {
         const input = {
@@ -29,12 +30,13 @@ class TaskController {
             id: req.params.id,
         }
         const task = await TaskService.update(input);
-        return task;
+        res.json(task);
     }
 
-    async delete(req: Request) {
+    async delete(req: Request, res: Response) {
         const task = await TaskService.delete(req.params.id);
-        return task;
+        res.json(task);
+
     }
 }
 

@@ -2,15 +2,15 @@ import UserService from '../services/user.service';
 import { Request, Response } from 'express';
 import { User } from '../types/user.type';
 class UserController {
-    async list() {
+    async list(res: Response) {
         const users = await UserService.list();
-        return users;
+        res.json(users);
     }
 
     async find(req: Request, res: Response) {
         const username = req.params.username;
         const user = await UserService.find(username);
-        return user;
+        res.json(user);
     }
 
     async detail(req: Request, res: Response) {
@@ -19,7 +19,8 @@ class UserController {
             password: req.body.password,
         }
         const user = await UserService.detail(iuser);
-        return user;
+        res.json(user);
+
     }
 
     async create(req: Request, res: Response) {
@@ -27,15 +28,18 @@ class UserController {
             ...req.body,
         }
         const user = await UserService.create(input);
-        return user;
+        res.json(user);
+
     }
     async update(req: Request, res: Response) {
         const input = {
             ...req.body,
         }
         const user = await UserService.update(input);
-        return user;
+        res.json(user);
+
     }
+    
 }
 
 export default new UserController();
