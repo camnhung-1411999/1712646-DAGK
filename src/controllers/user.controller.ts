@@ -2,7 +2,7 @@ import UserService from '../services/user.service';
 import { Request, Response } from 'express';
 import { User } from '../types/user.type';
 class UserController {
-    async list(res: Response) {
+    async list(req: Request, res: Response) { 
         const users = await UserService.list();
         res.json(users);
     }
