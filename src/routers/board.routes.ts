@@ -8,7 +8,7 @@ router.get(
   boardController.list,
 );
 router.get(
-  '/:id',
+  '/:user',
   boardController.find,
 );
 router.post(

@@ -20,17 +20,10 @@ class BoardService {
         return boards;
     }
 
-    async find(id: string) {
-        const board = await BoardCollection.findOne({
-            _id: id,
+    async find(user: string) {
+        const board = await BoardCollection.find({
+            createdBy: user,
         });
-
-        if (!board) {
-            const err: Error = new Error();
-            err.message = ' Board not found';
-            err.name = 'Error';
-            throw err;
-        }
         return board;
     }
 

@@ -27,7 +27,7 @@ class UserService {
         });
         if (!findUser) {
             const err: Error = new Error();
-            err.message = 'User not found';
+            err.message = 'NOT_FOUND';
             err.name = 'Error';
             throw err;
         }
@@ -37,7 +37,7 @@ class UserService {
       const isMatch: any = await findUser.comparePassword(input.password);
       if (!isMatch) {
         const err: Error = new Error();
-        err.message = 'Password not match';
+        err.message = 'NOT_MATCH';
         err.name = 'Error';
         throw err;
       }
@@ -82,8 +82,9 @@ class UserService {
     .then((user) => {
       if (user) {
         const err: Error = new Error();
-        err.message = 'User already exists'
+        err.message = 'USER_EXIST'
         err.name = 'Error'
+        throw err;
       }
     })
     const userCreate = new UserCollection({

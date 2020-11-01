@@ -20,9 +20,10 @@ class BoardController {
     }
 
     async find(req: Request, res: Response) {
-        const id = req.params.id;
-        const board = await BoardService.find(id);
-        return board;
+        const user = req.params.user;
+        const board = await BoardService.find(user);
+        console.log(board);
+        res.send(board);
     }
 
     async create(req: Request, res: Response) {
@@ -30,7 +31,6 @@ class BoardController {
             ...req.body,
         }
         const board = await BoardService.create(input);
-        res.json(board);
     }
     async update(req: Request, res: Response) {
         const input = {
