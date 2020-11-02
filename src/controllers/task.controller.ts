@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 class TaskController {
     async list(req: Request, res: Response) {
         const input = {
-            type: req.query.type,
+            status: req.query.status,
             board: req.query.board,
         }
         const tasks = await TaskService.list(input);

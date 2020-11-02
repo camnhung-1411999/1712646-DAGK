@@ -22,7 +22,6 @@ class BoardController {
     async find(req: Request, res: Response) {
         const user = req.params.user;
         const board = await BoardService.find(user);
-        console.log(board);
         res.send(board);
     }
 

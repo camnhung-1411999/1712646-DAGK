@@ -14,6 +14,7 @@ class UserController {
   }
 
   async detail(req: Request, res: Response) {
+    
     const iuser: User = {
       user: req.body.username,
       password: req.body.password,
