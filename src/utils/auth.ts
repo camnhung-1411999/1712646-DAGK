@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, {verify} from 'jsonwebtoken';
 import { User } from '../types/user.type';
 
 const jwtConfig = {
@@ -25,6 +25,14 @@ const authUtils = {
       expiresIn: '2d',
     });
   },
+  async verifyJWT(token: string) {
+    return verify(token, jwtConfig.accessTokenSecret, (err: any, user: any) => {
+      if (err) {
+        throw err;
+      }
+      return user
+    });
+  }
 };
 
 export default authUtils;

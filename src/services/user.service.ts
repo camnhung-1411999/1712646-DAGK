@@ -8,9 +8,10 @@ class UserService {
     return users;
   }
 
-  async find(input: string) {
+  async find(input: any) {
+    const verifyUser:any = await authUtils.verifyJWT(input);
     const user = await UserCollection.findOne({
-      user: input,
+      user: verifyUser.user,
     });
     if (!user) {
       const err: Error = new Error();

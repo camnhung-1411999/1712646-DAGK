@@ -8,8 +8,14 @@ class UserController {
   }
 
   async find(req: Request, res: Response) {
-    const username = req.params.user;
-    const user = await UserService.find(username);
+    const accessToken = req.headers['authorization'];
+    if (!accessToken) {
+      res.status(403).json({
+        name: 'ERROR',
+        message: 'TOKEN_NOT_FOUND'
+      })
+    }
+    const user = await UserService.find(accessToken);
     res.json(user);
   }
 

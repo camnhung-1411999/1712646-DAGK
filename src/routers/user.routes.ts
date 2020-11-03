@@ -5,11 +5,6 @@ const router = express.Router();
 
 router.get(
   '/',
-  userController.list,
-);
-
-router.get(
-  '/:username',
   userController.find,
 )
 router.post(
