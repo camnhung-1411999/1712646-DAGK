@@ -30,6 +30,7 @@ class BoardController {
             ...req.body,
         }
         const board = await BoardService.create(input);
+        res.send(board);
     }
     async update(req: Request, res: Response) {
         const input = {
@@ -37,12 +38,12 @@ class BoardController {
             id: req.params.id,
         }
         const board = await BoardService.update(input);
-        return board;
+        res.send(board);
     }
 
-    async delete(req: Request) {
+    async delete(req: Request, res: Response) {
         const board = await BoardService.delete(req.params.id);
-        return board;
+        res.send(board)
     }
 }
 
