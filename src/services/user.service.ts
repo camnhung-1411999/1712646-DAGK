@@ -22,6 +22,21 @@ class UserService {
     return user;
   }
 
+  async checkPassword(input: any) {
+    const data = await UserCollection.findOne({
+      user: input.user,
+    });
+    if (data && input.password) {
+      const isMatch: any = await data.comparePassword(input.password);
+      if (!isMatch) {
+        const err: Error = new Error();
+        err.message = "NOT_MATCH";
+        err.name = "Error";
+        throw err;
+      }
+    }
+    return data;
+  }
   async detail(input: User) {
     const findUser = await UserCollection.findOne({
       user: input.user,

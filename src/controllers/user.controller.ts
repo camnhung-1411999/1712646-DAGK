@@ -19,6 +19,21 @@ class UserController {
     res.json(user);
   }
 
+  async checkPassword(req: Request, res: Response) {
+    const input = {
+      user: req.params.user,
+      password: req.body.password,
+    }
+    await UserService.checkPassword(input).then((user) => {
+      res.json(user);
+    }).catch((err) =>{
+      res.status(422).json({
+        name:'ERROR',
+        message:err.message,
+      })
+    });
+    
+  }
   async detail(req: Request, res: Response) {
     
     const iuser: User = {
@@ -58,6 +73,7 @@ class UserController {
   async update(req: Request, res: Response) {
     const input = {
       ...req.body,
+      user: req.params.user,
     };
     const user = await UserService.update(input);
     res.json(user);

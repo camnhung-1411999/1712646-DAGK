@@ -11,6 +11,10 @@ router.get(
   '/:user',
   boardController.find,
 );
+router.get(
+  '/name/:id',
+  boardController.findName,
+);
 router.post(
   '/',
   boardController.create,

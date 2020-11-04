@@ -27,6 +27,13 @@ class BoardService {
         return board;
     }
 
+    async findName(id: string) {
+        const board = await BoardCollection.findOne({
+            _id: id,
+        });
+        return board;
+    }
+
     async create(input: IBoard) {
         const board = await BoardCollection.create({
           createdBy: input.createdBy,

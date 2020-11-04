@@ -25,6 +25,11 @@ class BoardController {
         const board = await BoardService.find(user);
         res.send(board);
     }
+    async findName(req: Request, res: Response) {
+        const id = req.params.id;
+        const board = await BoardService.findName(id);
+        res.send(board);
+    }
 
     async create(req: Request, res: Response) {
         const input = {

@@ -15,8 +15,13 @@ router.post(
   '/',
   userController.create,
 )
+router.post(
+  '/checkPw/:user',
+  userController.checkPassword,
+)
 router.put(
-  '/profile',
+  '/:user',
   userController.update,
 )
+router.get
 export default router;
