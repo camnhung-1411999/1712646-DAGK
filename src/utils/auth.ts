@@ -14,7 +14,7 @@ const authUtils = {
       subject: user.id || '',
       audience: jwtConfig.audience,
       issuer: jwtConfig.issuer,
-      expiresIn: '30min',
+      expiresIn: '2d',
     });
   },
   async generateRefreshToken(user: User) {
@@ -22,7 +22,7 @@ const authUtils = {
       subject: user.id || '',
       audience: jwtConfig.audience,
       issuer: jwtConfig.issuer,
-      expiresIn: '2d',
+      expiresIn: '5d',
     });
   },
   async verifyJWT(token: string) {
