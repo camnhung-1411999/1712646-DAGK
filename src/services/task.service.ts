@@ -77,6 +77,11 @@ class TaskService {
         })
         return true;
     }
+    async deleteTasks(input: string) {
+        await TaskCollection.deleteMany({
+            board: input,
+        })
+    }
 }
 
 export default new TaskService();

@@ -1,5 +1,6 @@
 import BoardService from '../services/board.service';
 import { Request, Response } from 'express';
+import taskService from '../services/task.service';
 class BoardController {
     async list(req: Request, res: Response) {
         let input = {};
@@ -43,6 +44,7 @@ class BoardController {
 
     async delete(req: Request, res: Response) {
         const board = await BoardService.delete(req.params.id);
+        await taskService.deleteTasks(req.params.id);
         res.send(board)
     }
 }
