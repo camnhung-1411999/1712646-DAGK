@@ -1,4 +1,5 @@
 import BoardCollection, { IBoard } from '../model/board.model';
+import authUtils from '../utils/auth';
 
 class BoardService {
     async list(input: any) {
@@ -21,10 +22,20 @@ class BoardService {
     }
 
     async find(user: string) {
+        const imembers: any=[user];
         const board = await BoardCollection.find({
             createdBy: user,
         });
-        return board;
+        let iboard = await BoardCollection.find({
+            members: {
+                $in: [user]
+            }
+        });
+        iboard = [
+            ...iboard,
+            ...board
+        ]
+        return iboard;
     }
 
     async findName(id: string) {
@@ -43,7 +54,7 @@ class BoardService {
         return board;
     }
 
-    async update(input: IBoard) {
+    async update(input: any) {
         const board = await BoardCollection.findOne({
             _id: input.id,
         });
@@ -57,8 +68,9 @@ class BoardService {
         if (input.name) {
             board.name = input.name;
         }
-        if (input.members) {
-            board.members = input.members;
+        if (input.accessToken) {
+             const verifyUser:any = await authUtils.verifyJWT(input.accessToken);
+            board.members.push(verifyUser.user);
         }
 
         await board.save();

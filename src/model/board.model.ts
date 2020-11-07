@@ -4,7 +4,7 @@ import UserCollection from './user.model';
 export type IBoard = mongoose.Document & {
   createdBy: string;
   name: string;
-  members: [];
+  members: [string];
 };
 
 const boardSchema = new mongoose.Schema({
