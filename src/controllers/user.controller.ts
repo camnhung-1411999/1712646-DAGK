@@ -34,6 +34,46 @@ class UserController {
     });
     
   }
+  async loginGoogle(req:Request, res: Response) {
+    const data = {
+      ...req.body,
+    }
+    await UserService.create(data).then(async (user) => {
+      await UserService.detail(data).then((iuser) =>{
+        res.json(iuser);
+      }).catch(err => {
+        if(err.message === 'NOT_FOUND') {
+          res.status(404).json({
+            name:'ERROR',
+            message:err.message,
+          });
+        } else {
+          res.status(422).json({
+            name:'ERROR',
+            message:err.message,
+          })
+        }
+      });
+    }).catch(async (err) => {
+        if (err) {
+          await UserService.detail(data).then((iuser) =>{
+            res.json(iuser);
+          }).catch(err => {
+            if(err.message === 'NOT_FOUND') {
+              res.status(404).json({
+                name:'ERROR',
+                message:err.message,
+              });
+            } else {
+              res.status(422).json({
+                name:'ERROR',
+                message:err.message,
+              })
+            }
+          });
+        }
+    });
+  }
   async detail(req: Request, res: Response) {
     
     const iuser: User = {

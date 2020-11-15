@@ -16,6 +16,10 @@ router.post(
   userController.create,
 )
 router.post(
+  '/google',
+  userController.loginGoogle,
+)
+router.post(
   '/checkPw/:user',
   userController.checkPassword,
 )
