@@ -2,8 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import routes from "./routers";
 import cors from "cors";
-import { Socket } from "socket.io";
-import taskSocket from './socket/task.socket';
 import logger from './utils/log';
 const app = express();
 // const http = require("http");
@@ -15,8 +13,6 @@ const app = express();
 // const io = socketio(server);
 
 
-let server = require("http").Server(app);
-let io = require("socket.io")(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,10 +23,7 @@ app.use(
   })
 );
 
-io.on("connection", (socket: Socket, callback: any) => {
- logger.info("Connected to client");
-  taskSocket(socket);
-});
+
 app.use("/", routes);
 
-export default server;
+export default app;
