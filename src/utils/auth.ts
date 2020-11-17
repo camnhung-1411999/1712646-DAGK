@@ -14,7 +14,7 @@ const authUtils = {
       subject: user.id || '',
       audience: jwtConfig.audience,
       issuer: jwtConfig.issuer,
-      expiresIn: '1min',
+      expiresIn: '2d',
     });
   },
   async generateRefreshToken(user: User) {
