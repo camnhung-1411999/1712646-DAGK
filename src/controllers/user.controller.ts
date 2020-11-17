@@ -53,7 +53,7 @@ class UserController {
     res.json(token);
   }
 
-  async loginGoogle(req:Request, res: Response) {
+  async loginSocial(req:Request, res: Response) {
     const data = {
       ...req.body,
     }

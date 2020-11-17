@@ -16,8 +16,8 @@ router.post(
   userController.create,
 )
 router.post(
-  '/google',
-  userController.loginGoogle,
+  '/social',
+  userController.loginSocial,
 )
 router.post(
   '/checkPw/:user',
