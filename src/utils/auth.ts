@@ -14,7 +14,7 @@ const authUtils = {
       subject: user.id || '',
       audience: jwtConfig.audience,
       issuer: jwtConfig.issuer,
-      expiresIn: '2d',
+      expiresIn: '1min',
     });
   },
   async generateRefreshToken(user: User) {
@@ -27,6 +27,14 @@ const authUtils = {
   },
   async verifyJWT(token: string) {
     return verify(token, jwtConfig.accessTokenSecret, (err: any, user: any) => {
+      if (err) {
+        throw err;
+      }
+      return user
+    });
+  },
+  async verifyRefreshToken(token: string) {
+    return verify(token, jwtConfig.refreshTokenSecret, (err: any, user: any) => {
       if (err) {
         throw err;
       }

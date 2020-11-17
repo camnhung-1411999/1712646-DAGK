@@ -23,6 +23,10 @@ router.post(
   '/checkPw/:user',
   userController.checkPassword,
 )
+router.get(
+  '/refresh',
+  userController.refresh,
+)
 router.put(
   '/:user',
   userController.update,

@@ -1,6 +1,6 @@
-import UserService from "../services/user.service";
-import { Request, Response } from "express";
-import { User } from "../types/user.type";
+import UserService from '../services/user.service';
+import { Request, Response } from 'express';
+import { User } from '../types/user.type';
 class UserController {
   async list(req: Request, res: Response) {
     const users = await UserService.list();
@@ -15,8 +15,20 @@ class UserController {
         message: 'TOKEN_NOT_FOUND'
       })
     }
-    const user = await UserService.find(accessToken);
-    res.json(user);
+    await UserService.find(accessToken).then((user) => {
+      res.json(user);
+    }).catch((err) => {
+      if(err.status === 404) {
+        res.status(404).json({
+          name:'ERROR',
+          message:err.message,
+        });
+      }
+      res.status(401).json({
+        name:'ERROR',
+        message:'TOKEN_EXPIRE',
+      });
+    })
   }
 
   async checkPassword(req: Request, res: Response) {
@@ -34,6 +46,13 @@ class UserController {
     });
     
   }
+
+  async refresh(req: Request, res: Response) {
+    const refreshToken: string = req.headers['authorization'] + '';
+    const token = await UserService.refreshToken(refreshToken)
+    res.json(token);
+  }
+
   async loginGoogle(req:Request, res: Response) {
     const data = {
       ...req.body,

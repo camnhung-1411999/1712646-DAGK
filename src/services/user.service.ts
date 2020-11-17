@@ -1,7 +1,7 @@
-import { AuthTokenCollection, IAuthToken } from "../model/auth.model";
-import UserCollection, { IUser } from "../model/user.model";
-import { User } from "../types/user.type";
-import authUtils from "../utils/auth";
+import { AuthTokenCollection, IAuthToken } from '../model/auth.model';
+import UserCollection, { IUser } from '../model/user.model';
+import { User } from '../types/user.type';
+import authUtils from '../utils/auth';
 class UserService {
   async list() {
     const users = await UserCollection.find();
@@ -9,17 +9,20 @@ class UserService {
   }
 
   async find(input: any) {
-    const verifyUser:any = await authUtils.verifyJWT(input);
-    const user = await UserCollection.findOne({
-      user: verifyUser.user,
-    });
-    if (!user) {
-      const err: Error = new Error();
-      err.message = "User not found";
-      err.name = "Error";
+    return authUtils.verifyJWT(input).then(async (verifyUser: any) => {
+      const user = await UserCollection.findOne({
+        user: verifyUser.user,
+      });
+      if (!user) {
+        const err: Error = new Error();
+        err.message = 'User not found';
+        err.name = 'Error';
+        throw err;
+      }
+      return user;
+    }).catch((err) => {
       throw err;
-    }
-    return user;
+    });
   }
 
   async checkPassword(input: any) {
@@ -30,21 +33,40 @@ class UserService {
       const isMatch: any = await data.comparePassword(input.password);
       if (!isMatch) {
         const err: Error = new Error();
-        err.message = "NOT_MATCH";
-        err.name = "Error";
+        err.message = 'NOT_MATCH';
+        err.name = 'Error';
         throw err;
       }
     }
     return data;
   }
+
+  async refreshToken(input: string) {
+    const verifyUser: any = await authUtils.verifyRefreshToken(input);
+    const user = await UserCollection.findOne({
+      user: verifyUser.user,
+    });
+    const info: User = {
+      user: verifyUser.user,
+    }
+    const accessToken = await authUtils.generateAccessToken(info);
+    const refreshToken = await authUtils.generateRefreshToken(info);
+
+    return {
+      accessToken,
+      refreshToken,
+      ...user,
+    }
+  }
+
   async detail(input: User) {
     const findUser = await UserCollection.findOne({
       user: input.user,
     });
     if (!findUser) {
       const err: Error = new Error();
-      err.message = "NOT_FOUND";
-      err.name = "Error";
+      err.message = 'NOT_FOUND';
+      err.name = 'Error';
       throw err;
     }
 
@@ -53,8 +75,8 @@ class UserService {
       const isMatch: any = await findUser.comparePassword(input.password);
       if (!isMatch) {
         const err: Error = new Error();
-        err.message = "NOT_MATCH";
-        err.name = "Error";
+        err.message = 'NOT_MATCH';
+        err.name = 'Error';
         throw err;
       }
     }
@@ -65,7 +87,7 @@ class UserService {
     const authToken = {
       accessToken: newAccessToken,
       refreshToken: newRefreshToken,
-      kind: "",
+      kind: '',
     };
     return AuthTokenCollection.findOne(
       { user: findUser.id }
@@ -97,8 +119,8 @@ class UserService {
     }).then((user) => {
       if (user) {
         const err: Error = new Error();
-        err.message = "USER_EXIST";
-        err.name = "Error";
+        err.message = 'USER_EXIST';
+        err.name = 'Error';
         throw err;
       }
     });
@@ -117,7 +139,7 @@ class UserService {
     });
     if (!user) {
       const error = new Error();
-      error.message = " User not found";
+      error.message = ' User not found';
       throw error;
     }
     if (input.password) {
